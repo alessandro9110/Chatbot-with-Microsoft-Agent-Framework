@@ -1,5 +1,7 @@
-# Labs
-  
+# Chatbot with Microsoft Agent Framework
+
+This is a test to use GitHub Copilot to create a chatbot with Microsoft Agent Framework.
+
 ## Azure DevOps Pipeline per Chatbot Agent su Azure AI Foundry
 
 Questa repository include una pipeline CI/CD per il deploy di un chatbot come agente su Azure AI Foundry, integrando Cosmos DB e Azure AI Search.
@@ -55,7 +57,7 @@ Nel file `azure-pipelines.yml`, aggiungi lo script o task specifico per il deplo
 
 ```yaml
 		- script: |
-				az ai foundry agent deploy --name ${{ parameters.aiFoundryName }} --resource-group ${{ parameters.resourceGroup }} --model-path ./agent
+			az ai foundry agent deploy --name ${{ parameters.aiFoundryName }} --resource-group ${{ parameters.resourceGroup }} --model-path ./agent
 			displayName: 'Deploy Chatbot Agent su AI Foundry'
 ```
 
@@ -82,7 +84,7 @@ Il codice dell'agente è organizzato nella cartella `agent/` e utilizza Azure Ag
 Imposta le seguenti variabili d'ambiente:
 
 ```bash
-export AZURE_AI_PROJECT_ENDPOINT="https://your-project.azure.com"
+eport AZURE_AI_PROJECT_ENDPOINT="https://your-project.azure.com"
 export AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-4o"
 export COSMOS_ENDPOINT="https://your-cosmos.documents.azure.com:443/"
 export COSMOS_KEY="your-cosmos-key"
