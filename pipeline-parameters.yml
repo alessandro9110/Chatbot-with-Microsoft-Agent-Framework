@@ -1,0 +1,21 @@
+# Azure Pipeline Parameters
+# Personalizza i parametri per il deploy del chatbot agent
+parameters:
+  - name: azureSubscription
+    type: string
+    default: 'AZURE_SUBSCRIPTION'
+  - name: resourceGroup
+    type: string
+    default: 'chatbot-rg'
+  - name: location
+    type: string
+    default: 'westeurope'
+  - name: cosmosDbName
+    type: string
+    default: 'chatbot-cosmosdb'
+  - name: aiSearchName
+    type: string
+    default: 'chatbot-search'
+  - name: aiFoundryName
+    type: string
+    default: 'chatbot-foundry'

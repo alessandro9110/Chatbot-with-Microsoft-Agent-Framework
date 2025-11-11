@@ -1,0 +1,60 @@
+# Azure DevOps Pipeline: Test & Deploy Chatbot Agent on Azure AI Foundry
+
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: '$(AZURE_SUBSCRIPTION)'
+  resourceGroup: 'chatbot-rg'
+  location: 'westeurope'
+  cosmosDbName: 'chatbot-cosmosdb'
+  aiSearchName: 'chatbot-search'
+  aiFoundryName: 'chatbot-foundry'
+
+stages:
+- stage: Test
+  displayName: 'Run Unit Tests'
+  jobs:
+  - job: TestJob
+    steps:
+    - script: |
+        cd agent
+        pip install -r requirements.txt
+        pip install pytest
+        pytest test_agent.py
+      displayName: 'Install dependencies & run agent tests'
+
+- stage: Deploy
+  displayName: 'Deploy Chatbot Agent & Resources'
+  dependsOn: Test
+  jobs:
+  - job: DeployInfra
+    displayName: 'Provision Azure Resources'
+    steps:
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: $(azureSubscription)
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az group create --name $resourceGroup --location $location
+          az cosmosdb create --name $cosmosDbName --resource-group $resourceGroup --kind MongoDB
+          az search service create --name $aiSearchName --resource-group $resourceGroup --location $location --sku standard
+          # Placeholder for AI Foundry deployment
+          echo "Deploy AI Foundry model manually or via REST API."
+
+  - job: DeployAgent
+    displayName: 'Deploy Chatbot Agent'
+    dependsOn: DeployInfra
+    steps:
+    - script: |
+        echo "Deploying chatbot agent to Azure AI Foundry..."
+        # Add deployment script/REST API call here
+      displayName: 'Deploy Agent'
+
+# Personalizza i comandi di deploy in base al tuo agente e modello.
